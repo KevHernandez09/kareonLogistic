@@ -1,0 +1,17 @@
+.kareon-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.kareon-layout__sidebar {
+  width: 260px;
+  border-right: 1px solid #e5e7eb;
+  background: #0b1220;
+  color: #e5e7eb;
+}
+
+.kareon-layout__content {
+  flex: 1;
+  padding: 1.5rem;
+}
