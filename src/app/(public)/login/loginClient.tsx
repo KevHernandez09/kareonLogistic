@@ -69,7 +69,7 @@ export default function LoginClient() {
           </label>
 
           <label className="block">
-            <span className="text-sm font-medium">Password</span>
+            <span className="text-sm font-medium">Password </span>
             <input
               name="password"
               type="password"
