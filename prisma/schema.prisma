@@ -1,131 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
-// --- User & Roles ---
-
-enum Role {
-  ADMIN
-  OPERATOR
-  DRIVER
-}
-
 model User {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
   email        String   @unique
   passwordHash String
-  name         String?
-  role         Role     @default(OPERATOR)
-
+  role         String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-
-  createdOrders Order[] @relation("OrdersCreatedBy")
 }
 
-// --- Customers ---
-
-model Customer {
-  id        String   @id @default(cuid())
-  name      String
-  taxId     String?  // tax identification / business ID
-  email     String?
-  phone     String?
-  address   String?
-
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  data      Json
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  orders    Order[]
-}
-
-// --- Products ---
-
-model Product {
-  id          String   @id @default(cuid())
-  sku         String   @unique
-  name        String
-  description String?
-  weightKg    Float    @default(0)
-  volumeM3    Float    @default(0)
-  isActive    Boolean  @default(true)
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  stockItems  StockItem[]
-  orderItems  OrderItem[]
-}
-
-// --- Warehouses ---
-
-model Warehouse {
-  id        String     @id @default(cuid())
-  name      String
-  code      String?    @unique
-  address   String?
-
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-
-  stockItems StockItem[]
-}
-
-// --- Stock per warehouse/product ---
-
-model StockItem {
-  id           String     @id @default(cuid())
-  product      Product    @relation(fields: [productId], references: [id])
-  productId    String
-  warehouse    Warehouse  @relation(fields: [warehouseId], references: [id])
-  warehouseId  String
-  location     String?    // e.g. A-01-03
-  quantity     Int        @default(0)
-
-  updatedAt    DateTime   @updatedAt
-
-  @@unique([productId, warehouseId, location])
-}
-
-// --- Orders ---
-
-enum OrderStatus {
-  DRAFT
-  CONFIRMED
-  PICKING
-  IN_TRANSIT
-  DELIVERED
-  CANCELLED
-}
-
-model Order {
-  id            String       @id @default(cuid())
-  customer      Customer     @relation(fields: [customerId], references: [id])
-  customerId    String
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  status        OrderStatus  @default(DRAFT)
-
-  createdBy     User?        @relation("OrdersCreatedBy", fields: [createdById], references: [id])
-  createdById   String?
-
-  items         OrderItem[]
-}
-
-model OrderItem {
-  id          String   @id @default(cuid())
-  order       Order    @relation(fields: [orderId], references: [id])
-  orderId     String
-  product     Product  @relation(fields: [productId], references: [id])
-  productId   String
-  quantity    Int
-  unitPrice   Float    @default(0) // optional, but useful
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 }

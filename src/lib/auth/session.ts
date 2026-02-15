@@ -1,31 +1,21 @@
-/**
- * Placeholder session contract.
- * TODO: implement concrete session provider wiring.
- */
-export type SessionData = {
-  userId: string;
-  email?: string;
+import type { SessionOptions } from "iron-session";
+
+export type SessionUser = {
+  id: string;
+  email: string;
+  role: string;
 };
 
-/**
- * Reads the current session, if available.
- */
-export async function getSession(): Promise<SessionData | null> {
-  // Placeholder: session retrieval not implemented yet.
-  return null;
-}
+export type SessionData = {
+  user?: SessionUser;
+};
 
-/**
- * Creates a session for the given user identifier.
- */
-export async function createSession(_userId: string): Promise<void> {
-  void _userId;
-  // Placeholder: session creation not implemented yet.
-}
-
-/**
- * Destroys the active session.
- */
-export async function destroySession(): Promise<void> {
-  // Placeholder: session destruction not implemented yet.
-}
+export const sessionOptions: SessionOptions = {
+  password: process.env.SESSION_SECRET as string,
+  cookieName: "kareon_session",
+  cookieOptions: {
+    secure: process.env.NODE_ENV === "production",
+    httpOnly: true,
+    sameSite: "lax",
+  },
+};
