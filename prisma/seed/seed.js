@@ -1,5 +1,6 @@
-const bcryptjs = require("bcryptjs");
-import { PrismaClient } from '@prisma/client'
+import bcrypt from "bcryptjs";
+import { PrismaClient } from "@prisma/client";
+
 
 
 const prisma = new PrismaClient();
@@ -7,7 +8,7 @@ const prisma = new PrismaClient();
 async function main() {
   const email = "admin@kareon.com";
   const password = "Admin123!";
-  const passwordHash = await bcryptjs.hash(password, 10);
+  const passwordHash = await bcrypt.hash(password, 10);
 
   await prisma.user.upsert({
     where: { email },
