@@ -6,7 +6,7 @@ node_modules/
 out/
 .vercel/
 
-# Builds
+# Builds 
 dist/
 build/
 coverage/
