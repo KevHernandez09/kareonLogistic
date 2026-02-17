@@ -1,0 +1,26 @@
+name: Bug report
+description: Reportar un bug reproducible
+title: "[BUG]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    attributes:
+      label: Descripción
+      description: ¿Qué pasa?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Pasos para reproducir
+      description: Pasos claros para replicar el bug
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Evidencia / Logs
+      description: Capturas, logs, links, etc.
