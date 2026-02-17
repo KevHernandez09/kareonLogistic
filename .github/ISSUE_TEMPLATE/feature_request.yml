@@ -1,0 +1,22 @@
+name: Feature request
+description: Proponer una mejora o nueva feature
+title: "[FEAT]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    attributes:
+      label: Problema / Oportunidad
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Propuesta
+      description: ¿Qué quieres que se construya?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Criterios de aceptación
+      description: Lista de checks verificables
+    validations:
+      required: true
